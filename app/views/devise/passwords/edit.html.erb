@@ -1,0 +1,22 @@
+<div class="row justify-content-center">
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "col-12 col-md-6 col-lg-4 border border-radius-5 mt-5 p-4" }) do |f| %>
+    <h3 class="form-heading">Change your password</h3>
+    <%= f.hidden_field :reset_password_token %>
+
+    <div class="form-group mb-4 field">
+      <%= f.password_field :password, class: 'form-control', autofocus: true, autocomplete: "new-password", placeholder: "Password (#{@minimum_password_length} characters minimum)" %>
+      <%= render "devise/shared/error_messages", resource: resource, field: :password %>
+    </div>
+
+    <div class="form-group mb-4 field">
+      <%= f.password_field :password_confirmation, class: 'form-control', autocomplete: "new-password", placeholder: "Confirm Password" %>
+      <%= render "devise/shared/error_messages", resource: resource, field: :password_confirmation %>
+    </div>
+
+    <div class="form-group mb-4 actions">
+      <%= f.submit "Change my password", class: 'btn btn-primary btn-submit' %>
+    </div>
+
+    <%= render "devise/shared/links" %>
+  <% end %>
+</div>

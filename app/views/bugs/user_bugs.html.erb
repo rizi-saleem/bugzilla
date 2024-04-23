@@ -1,0 +1,45 @@
+<% if @bugs.empty? %>
+  <div class=" counter col-12 col-md-8 col-lg-6 offset-md-2 offset-lg-3 border border-radius-5 p-3 mt-3">
+    <h3 class="count-heading mt-3 mx-4">You don't have any bugs yet!</h3>
+  </div>
+<% else %>
+  <div class="col-12 col-md-10 col-lg-8 offset-md-1 offset-lg-2 border border-radius-5 p-3 mt-5">
+    <h3 class="table-heading">Your Bugs</h3>
+
+    <table class="table table-hover table-responsive">
+      <thead class="thead-light">
+        <tr>
+          <th>Title</th>
+          <th>Deadline</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Project</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @bugs.includes(:project).each do |bug| %>
+          <tr>
+            <td><%= link_to bug.title, project_bug_path(bug.project, bug) %></td>
+            <td><%= bug.deadline %></td>
+            <td><%= bug.bug_type.capitalize %></td>
+            <td><%= bug.status.capitalize %></td>
+            <td><%= link_to bug.project.name, project_path(bug.project) %></td>
+            <% if policy(bug).edit? %>
+              <td><%= link_to 'Edit', edit_project_bug_path(bug.project, bug) %></td>
+            <% else %>
+              <td class="text-muted">Edit</td>
+            <% end %>
+            <% if policy(bug).destroy? %>
+              <td><%= link_to 'Delete', project_bug_path(bug.project, bug), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% else %>
+              <td class="text-muted">Delete</td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
